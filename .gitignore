@@ -127,3 +127,5 @@ xcuserdata/
 
 
 # End of https://www.gitignore.io/api/xcode,macos,appcode
+
+\.gitignore\.save
