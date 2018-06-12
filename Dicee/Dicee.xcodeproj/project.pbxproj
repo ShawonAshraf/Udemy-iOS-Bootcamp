@@ -15,6 +15,7 @@
 		03357C8420D01437006976EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03357C8220D01437006976EB /* LaunchScreen.storyboard */; };
 		03357C8F20D01437006976EB /* DiceeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03357C8E20D01437006976EB /* DiceeTests.swift */; };
 		03357C9A20D01437006976EB /* DiceeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03357C9920D01437006976EB /* DiceeUITests.swift */; };
+		03357CA820D0359E006976EB /* DiceImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03357CA720D0359E006976EB /* DiceImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		03357C9520D01437006976EB /* DiceeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiceeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		03357C9920D01437006976EB /* DiceeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceeUITests.swift; sourceTree = "<group>"; };
 		03357C9B20D01437006976EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03357CA720D0359E006976EB /* DiceImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				03357C8220D01437006976EB /* LaunchScreen.storyboard */,
 				03357C8520D01437006976EB /* Info.plist */,
 				03357C7D20D01435006976EB /* Dicee.xcdatamodeld */,
+				03357CA720D0359E006976EB /* DiceImage.swift */,
 			);
 			path = Dicee;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				03357C7F20D01435006976EB /* Dicee.xcdatamodeld in Sources */,
 				03357C7920D01435006976EB /* ViewController.swift in Sources */,
+				03357CA820D0359E006976EB /* DiceImage.swift in Sources */,
 				03357C7720D01435006976EB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
