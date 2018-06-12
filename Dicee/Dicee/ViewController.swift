@@ -47,5 +47,9 @@ class ViewController: UIViewController {
             diceImageView2.image = #imageLiteral(resourceName: "dice1")
         }
     }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        updateDiceImages()
+    }
 }
 
