@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     // Our strings
-    let story1 = "Your car has blown a tire on a winding road in the middle of nowhere with no cell phone reception. You decide to hitchhike. A rusty pickup truck rumbles to a stop next to you. A man with a wide brimmed hat with soulless eyes opens the passenger door for you and asks: \"Need a ride, boy?\"."
+    let story1 = "Your car has blown a tire on a winding road in the middle of nowhere with no cell phone reception. You decide to hitchhike. A rusty pickup truck rumbles to a stop next to you. A man with a wide brimmed hat with soulless eyes opens the passenger door for you and asks: \"Need a ride?\"."
     let answer1a = "I\'ll hop in. Thanks for the help!"
     let answer1b = "Better ask him if he\'s a murderer first."
     
@@ -37,7 +37,9 @@ class ViewController: UIViewController {
     // TODO Step 5: Initialise instance variables here
     
     
-    
+    private var state: State = State()
+    private var currentStory: String = ""
+    private var storyFlow: [Int: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,16 @@ class ViewController: UIViewController {
         
         // TODO Step 3: Set the text for the storyTextView, topButton, bottomButton, and to T1_Story, T1_Ans1, and T1_Ans2
         
+        storyFlow[1] = story1
+        storyFlow[2] = story2
+        storyFlow[3] = story3
+        storyFlow[4] = story4
+        storyFlow[5] = story5
+        storyFlow[6] = story6
+        
+        storyTextView.text = story1
+        bottomButton.setTitle(answer1b, for: .normal)
+        topButton.setTitle(answer1a, for: .normal)
     }
 
     
@@ -52,14 +64,102 @@ class ViewController: UIViewController {
     @IBAction func buttonPressed(_ sender: UIButton) {
     
         // TODO Step 4: Write an IF-Statement to update the views
-                
-        // TODO Step 6: Modify the IF-Statement to complete the story
-        
-    
+        if !state.isComplete() {
+            updateState(tag: sender.tag)
+            updateStory()
+            updateUI()
+        } else {
+            let alert = UIAlertController(title: "The End", message: "You've reached the end", preferredStyle: .alert)
+            let startOverAction = UIAlertAction(title: "Start Over?", style: .default) { (action) in
+                self.resetAll()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                print("Canceled")
+            }
+            
+            alert.addAction(startOverAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true)
+        }
     }
     
+    private func updateUI() {
+        storyTextView.text = currentStory
+        updateButtonTitle()
+    }
+    
+    private func resetAll() {
+        state = State()
+        storyTextView.text = story1
+        bottomButton.setTitle(answer1b, for: .normal)
+        topButton.setTitle(answer1a, for: .normal)
+    }
+    
+    private func updateButtonTitle() {
+        if state.currentIndex == 2 {
+            bottomButton.setTitle(answer2b, for: .normal)
+            topButton.setTitle(answer2a, for: .normal)
+        } else if state.currentIndex == 3 {
+            bottomButton.setTitle(answer3b, for: .normal)
+            topButton.setTitle(answer3a, for: .normal)
+        } else {
+            bottomButton.setTitle("", for: .disabled)
+            topButton.setTitle("", for: .disabled)
+        }
+    }
 
-
+    private func updateStory() {
+        currentStory = storyFlow[state.currentIndex] ?? ""
+    }
+    
+    private func updateState(tag: Int) {
+        let currentQ = state.currentIndex
+        switch tag {
+        case 1:
+            state.flow[currentQ] = "a"
+        case 2:
+            state.flow[currentQ] = "b"
+        default:
+            print("Default Action")
+        }
+        
+        let index = currentQ
+        let answer = state.flow[index]
+        
+        
+        if index == 1 {
+            switch answer {
+            case "a":
+                state.currentIndex = 3
+            case "b":
+                state.currentIndex = 2
+            default:
+                print("updateStory")
+            }
+        } else if index == 2 {
+            switch answer {
+            case "a":
+                state.currentIndex = 3
+            case "b":
+                state.currentIndex = 4
+            default:
+                print("updateStory")
+            }
+        } else if index == 3 {
+            switch answer {
+            case "a":
+                state.currentIndex = 6
+            case "b":
+                state.currentIndex = 5
+            default:
+                print("")
+            }
+        }
+        
+        print(state.isComplete())
+        print(state.flow)
+    }
 
 }
 
