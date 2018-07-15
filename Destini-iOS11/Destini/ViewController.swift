@@ -69,6 +69,18 @@ class ViewController: UIViewController {
             updateStory()
             updateUI()
         } else {
+            let alert = UIAlertController(title: "The End", message: "You've reached the end", preferredStyle: .alert)
+            let startOverAction = UIAlertAction(title: "Start Over?", style: .default) { (action) in
+                self.resetAll()
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                print("Canceled")
+            }
+            
+            alert.addAction(startOverAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true)
             print("done")
         }
     }
@@ -144,22 +156,6 @@ class ViewController: UIViewController {
             default:
                 print("")
             }
-        }
-
-        if state.isComplete() {
-            
-            let alert = UIAlertController(title: "The End", message: "You've reached the end", preferredStyle: .alert)
-            let startOverAction = UIAlertAction(title: "Start Over?", style: .default) { (action) in
-                self.resetAll()
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                print("Canceled")
-            }
-            
-            alert.addAction(startOverAction)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true)
         }
         
         print(state.currentIndex)
