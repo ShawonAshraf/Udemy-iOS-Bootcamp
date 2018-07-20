@@ -1,0 +1,24 @@
+PODS:
+  - Alamofire (4.7.2)
+  - SVProgressHUD (2.2.5)
+  - Swift.Json (1.7.1)
+
+DEPENDENCIES:
+  - Alamofire
+  - SVProgressHUD
+  - Swift.Json
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - SVProgressHUD
+    - Swift.Json
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  Swift.Json: ddb6ab8c26cb3898a212b892638e431d9e6dad84
+
+PODFILE CHECKSUM: fe8152c664488c2a6c7cf952f43e556b19c59361
+
+COCOAPODS: 1.5.3

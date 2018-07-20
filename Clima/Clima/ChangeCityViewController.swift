@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
 
 //Write the protocol declaration here:
 
 
 
-class ChangeCityViewController: UIViewController {
+class ChangeCityViewController: UIViewController{
     
     //Declare the delegate variable here:
 
