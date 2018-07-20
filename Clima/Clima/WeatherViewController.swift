@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreLocation
+import Alamofire
+import SwiftyJSON
 
 
 class WeatherViewController: UIViewController, CLLocationManagerDelegate {
@@ -42,7 +44,18 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     /***************************************************************/
     
     //Write the getWeatherData method here:
-    
+    func getWeatherData(param: [String : String]) {
+        Alamofire.request(AppConstants.WEATHER_URL, method: .get, parameters: param).responseJSON {
+            response in
+            if response.result.isSuccess {
+                print("Sucess! Got weather data.")
+                print(response.data!)
+            } else {
+                print(response.result.error!)
+                self.cityLabel.text = "Connection error."
+            }
+        }
+    }
 
     
     
@@ -77,13 +90,32 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     //Write the didUpdateLocations method here:
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
+        if location.horizontalAccuracy > 0 {
+            locationManager.stopUpdatingLocation()
+            
+            let latitude = String(location.coordinate.latitude)
+            let longitude = String(location.coordinate.longitude)
+            
+            print("Longitude : \(longitude)")
+            print("Latitude : \(latitude)")
+            
+            let params: [String : String] = [
+                "lat" : latitude,
+                "lon" : longitude,
+                "appid" : AppConstants.APP_ID
+            ]
+            
+            
+            getWeatherData(param: params)
+        }
     }
     
     
     
     //Write the didFailWithError method here:
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
+        print(error)
+        cityLabel.text = "Data not found for the location"
     }
     
     

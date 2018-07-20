@@ -6,7 +6,7 @@ target 'Clima' do
   use_frameworks!
 
   # Pods for Clima
-  pod 'Swift.Json'
+  pod 'SwiftyJSON'
   pod 'Alamofire'
   pod 'SVProgressHUD'
 
