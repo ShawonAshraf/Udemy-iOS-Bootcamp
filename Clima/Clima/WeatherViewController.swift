@@ -49,7 +49,10 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
             response in
             if response.result.isSuccess {
                 print("Sucess! Got weather data.")
-                print(response.data!)
+                
+                let weatherJSON: JSON = JSON(response.result.value!)
+                
+                print(weatherJSON)
             } else {
                 print(response.result.error!)
                 self.cityLabel.text = "Connection error."
