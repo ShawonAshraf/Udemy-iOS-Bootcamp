@@ -103,12 +103,12 @@
 			children = (
 				03282963210340ED0072BE69 /* AppDelegate.swift */,
 				03282965210340ED0072BE69 /* ViewController.swift */,
+				032829942103426A0072BE69 /* SecondVC.swift */,
 				03282967210340ED0072BE69 /* Main.storyboard */,
 				0328296D210340EF0072BE69 /* Assets.xcassets */,
 				0328296F210340EF0072BE69 /* LaunchScreen.storyboard */,
 				03282972210340EF0072BE69 /* Info.plist */,
 				0328296A210340ED0072BE69 /* SegueExample.xcdatamodeld */,
-				032829942103426A0072BE69 /* SecondVC.swift */,
 			);
 			path = SegueExample;
 			sourceTree = "<group>";

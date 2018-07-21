@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet var testField: UITextField!
+    @IBOutlet var textField: UITextField!
     @IBOutlet var btn: UIButton!
     
     override func viewDidLoad() {
@@ -23,6 +23,21 @@ class ViewController: UIViewController {
     }
 
     @IBAction func navToSecondVC(_ sender: Any) {
+        performSegue(withIdentifier: "goToSecondVC", sender: self)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToSecondVC" {
+            let destinationVC = segue.destination as! SecondVC
+            
+            if let text = textField.text {
+                destinationVC.textPassedOver = text
+            } else {
+                destinationVC.textPassedOver = "🤣 Nothing! Bamboozled!"
+            }
+            
+        }
     }
     
 }

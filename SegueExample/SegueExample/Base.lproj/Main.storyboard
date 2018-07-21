@@ -24,7 +24,7 @@
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="navToSecondVC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xF7-u6-VJ0"/>
-                                    <segue destination="9AM-mo-Bpk" kind="show" id="PGG-rb-vQJ"/>
+                                    <segue destination="9AM-mo-Bpk" kind="show" identifier="goToSecondVC" id="PGG-rb-vQJ"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZLG-M6-pS9">
@@ -40,7 +40,7 @@
                     </view>
                     <connections>
                         <outlet property="btn" destination="89b-yO-bOx" id="2lz-a0-Gxp"/>
-                        <outlet property="testField" destination="ZLG-M6-pS9" id="gam-tC-2gm"/>
+                        <outlet property="textField" destination="ZLG-M6-pS9" id="nRw-fp-fnO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
