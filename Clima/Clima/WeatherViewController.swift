@@ -12,10 +12,10 @@ import Alamofire
 import SwiftyJSON
 
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate {
+class WeatherViewController: UIViewController, CLLocationManagerDelegate, ChangeCityDelegate {
     
     //Constants
-    
+    //fetch from app constants
 
     //TODO: Declare instance variables here
     let locationManager = CLLocationManager()
@@ -156,11 +156,20 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate {
     
     
     //Write the userEnteredANewCityName Delegate method here:
+    func userEnteredNewCity(city: String) {
+        let param = ["q": city, "appid": AppConstants.APP_ID]
+        getWeatherData(param: param)
+    }
     
 
     
     //Write the PrepareForSegue Method here
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "changeCityName" {
+            let destinationVC = segue.destination as! ChangeCityViewController
+            destinationVC.delegate = self
+        }
+    }
     
     
     
