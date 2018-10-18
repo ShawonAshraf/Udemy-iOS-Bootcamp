@@ -88,15 +88,16 @@ class TodoListViewController: UITableViewController {
     }
     
     // load todos from storage when the app starts
-    func loadData() {
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
-        
+    // sets a default value for fetch if nothing is set
+    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
         do {
-            try itemArray = context.fetch(request)
+            itemArray = try context.fetch(request)
         } catch {
-            print("can't fetch")
+            print("Can't fetch!")
         }
+        
+        self.tableView.reloadData()
     }
-
+    
 }
 
