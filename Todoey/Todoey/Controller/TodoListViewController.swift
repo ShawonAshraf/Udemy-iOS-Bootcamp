@@ -14,12 +14,18 @@ class TodoListViewController: UITableViewController {
     var itemArray: [Item] = [Item]()
     // create a context for persistance storage
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    // category
+    var selectedCategory: Category? {
+        didSet {
+            loadData()
+        }
+    }
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
+//        loadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,6 +43,7 @@ class TodoListViewController: UITableViewController {
                 let newItem = Item(context: self.context)
                 newItem.title = text
                 newItem.done = false
+                newItem.parentCategory = self.selectedCategory
 
                 self.itemArray.append(newItem)
 
@@ -89,7 +96,16 @@ class TodoListViewController: UITableViewController {
     
     // load todos from storage when the app starts
     // sets a default value for fetch if nothing is set
-    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+            request.predicate = compoundPredicate
+        } else {
+            request.predicate = categoryPredicate
+        }
+        
         do {
             itemArray = try context.fetch(request)
         } catch {

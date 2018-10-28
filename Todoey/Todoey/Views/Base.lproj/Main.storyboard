@@ -89,7 +89,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="Xad-th-cmU" id="jBJ-IU-DYB"/>
-                        <segue destination="dxt-BX-6U6" kind="show" identifier=" goToTodos" id="S0b-Wk-4Ce"/>
+                        <segue destination="dxt-BX-6U6" kind="show" identifier="goToTodos" id="S0b-Wk-4Ce"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m4v-VP-5ad" userLabel="First Responder" sceneMemberID="firstResponder"/>
