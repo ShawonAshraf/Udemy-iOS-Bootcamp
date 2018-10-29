@@ -7,13 +7,13 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class TodoListViewController: UITableViewController {
     
-    var itemArray: [Item] = [Item]()
+    var todos: Results<Todo>?
     // create a context for persistance storage
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+//    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     // category
     var selectedCategory: Category? {
         didSet {
@@ -21,11 +21,14 @@ class TodoListViewController: UITableViewController {
         }
     }
     
+    // realm instance
+    let realm = try? Realm()
+    
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        loadData()
+        loadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,14 +43,20 @@ class TodoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (_) in
             
             if let text = textField.text {
-                let newItem = Item(context: self.context)
-                newItem.title = text
-                newItem.done = false
-                newItem.parentCategory = self.selectedCategory
-
-                self.itemArray.append(newItem)
-
-                self.saveData()
+                do {
+                    // save todo
+                    try self.realm?.write {
+                        let newItem = Todo()
+                        newItem.title = text
+                        newItem.done = false
+                        newItem.dateCreated = Date()
+                        self.selectedCategory?.todos.append(newItem)
+                    }
+                } catch {
+                    print("\(error)")
+                }
+                
+                self.tableView.reloadData()
             } else {
                 // GG
             }
@@ -64,54 +73,45 @@ class TodoListViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return todos?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
         
-        cell.textLabel?.text = itemArray[indexPath.row].title
-        cell.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
+        if let todo = todos?[indexPath.row] {
+            cell.textLabel?.text = todo.title
+            cell.accessoryType = todo.done ? .checkmark : .none
+        } else {
+            cell.textLabel?.text = "Nothing here mate!"
+            cell.accessoryType = .none
+        }
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        
-        self.saveData()
-
+        if let todo = todos?[indexPath.row] {
+            do {
+                try realm?.write {
+                    todo.done = !todo.done
+                    realm?.delete(todo)
+                }
+            } catch {
+                print("\(error)")
+            }
+        } else {
+            //gg
+        }
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func saveData() {
-        do {
-            try context.save()
-        } catch {
-            print("\(error)")
-        }
-        self.tableView.reloadData()
-    }
     
     // load todos from storage when the app starts
     // sets a default value for fetch if nothing is set
-    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
-        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-        
-        if let additionalPredicate = predicate {
-            let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
-            request.predicate = compoundPredicate
-        } else {
-            request.predicate = categoryPredicate
-        }
-        
-        do {
-            itemArray = try context.fetch(request)
-        } catch {
-            print("Can't fetch!")
-        }
-        
+    func loadData() {
+        todos = selectedCategory?.todos.sorted(byKeyPath: "title", ascending: true)
         self.tableView.reloadData()
     }
     
