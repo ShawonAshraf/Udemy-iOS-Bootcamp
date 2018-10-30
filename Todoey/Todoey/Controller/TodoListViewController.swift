@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class TodoListViewController: UITableViewController {
+class TodoListViewController: SwipeTableViewController {
     
     var todos: Results<Todo>?
     // create a context for persistance storage
@@ -29,6 +29,8 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadData()
+        
+        tableView.rowHeight = 55.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -77,7 +79,7 @@ class TodoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let todo = todos?[indexPath.row] {
             cell.textLabel?.text = todo.title
@@ -95,10 +97,9 @@ class TodoListViewController: UITableViewController {
             do {
                 try realm?.write {
                     todo.done = !todo.done
-                    realm?.delete(todo)
                 }
             } catch {
-                print("\(error)")
+                // gg
             }
         } else {
             //gg
@@ -113,6 +114,21 @@ class TodoListViewController: UITableViewController {
     func loadData() {
         todos = selectedCategory?.todos.sorted(byKeyPath: "title", ascending: true)
         self.tableView.reloadData()
+    }
+    
+    // override delete()
+    override func deleteData(at indexPath: IndexPath) {
+        if let todo = todos?[indexPath.row] {
+            do {
+                try realm?.write {
+                    realm?.delete(todo)
+                }
+            } catch {
+                print("\(error)")
+            }
+        } else {
+            //gg
+        }
     }
     
 }

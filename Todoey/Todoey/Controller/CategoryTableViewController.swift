@@ -84,7 +84,7 @@ class CategoryTableViewController: SwipeTableViewController {
         self.tableView.reloadData()
     }
     
-    override func updateModel(at indexPath: IndexPath) {
+    override func deleteData(at indexPath: IndexPath) {
         if let categoryToBeDeleted = self.categories?[indexPath.row] {
             do {
                 try self.realm?.write {
