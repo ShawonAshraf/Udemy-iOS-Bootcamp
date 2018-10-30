@@ -8,8 +8,10 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class CategoryTableViewController: UITableViewController {
+    
     @IBOutlet weak var addButton: UIBarButtonItem!
     
     // MARK: - Realm instance
@@ -24,6 +26,9 @@ class CategoryTableViewController: UITableViewController {
         
         // load data from context
         loadData()
+        
+        // increase cell height
+        tableView.rowHeight = 80.0
     }
 
     // MARK: - Table view data source
@@ -33,10 +38,18 @@ class CategoryTableViewController: UITableViewController {
         return categories?.count ?? 1
     }
     
+    // MARK: - swipe view
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
+//        cell.delegate = self
+//        return cell
+//    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No categories added yet"
+        
+        cell.delegate = self
         
         return cell
     }
